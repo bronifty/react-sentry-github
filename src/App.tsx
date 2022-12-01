@@ -17,8 +17,18 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
+class ValidationError extends Error {
+  constructor(message: any) {
+    super(message);
+    this.name = `ERROR: "${message}" from ${release}`;
+  }
+}
+
 function App() {
   const [count, setCount] = useState(0);
+  const handleClick = (message: any) => {
+    throw new ValidationError(message);
+  };
 
   return (
     <div className="App">
@@ -32,7 +42,13 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button
+          onClick={() => {
+            setCount((count) => count + 1);
+
+            handleClick(`Houston we have an error`);
+          }}
+        >
           count is {count}
         </button>
         <p>
