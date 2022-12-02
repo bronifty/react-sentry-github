@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-// import ErrorBoundary from "./components/ErrorBoundary";
 import "./App.css";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
@@ -19,7 +18,7 @@ Sentry.init({
 });
 
 class ValidationError extends Error {
-  constructor(message: any) {
+  constructor(message) {
     super(message);
     this.name = `ERROR: "${message}" from ${release}`;
   }
@@ -27,9 +26,6 @@ class ValidationError extends Error {
 
 function App() {
   const [count, setCount] = useState(0);
-  const handleClick = (message: any) => {
-    throw new ValidationError(message);
-  };
 
   return (
     <div className="App">
@@ -43,24 +39,25 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button
-          onClick={() => {
-            setCount((count) => count + 1);
-
-            handleClick(error_message);
-          }}
-        >
+        <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <button
+        onClick={() => {
+          throw new ValidationError(error_message);
+        }}
+      >
+        Capture Message
+      </button>
     </div>
   );
 }
 
-export default Sentry.withProfiler(App);
+export default App;
