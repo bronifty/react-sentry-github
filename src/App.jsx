@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
 let release = `react-sentry-github@1.0.0`;
-let error_message = `Houston we have a 4th error`;
+let error_message = `Houston we have a 4th error...`;
 //
 
 Sentry.init({
